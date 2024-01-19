@@ -1,6 +1,6 @@
 # Coursera Google Data Analytics Capstone Project 
 
-### Google Data Analytics Capstone Project: Cyclistic Bike-Share
+### Project: Cyclistic Bike-Share
 In this capstone project, I conducted a comprehensive analysis using various tools such as Excel, SQL, and Tableau to explore the data of Cyclistic, a fictional bike-sharing company. By examining the patterns and behaviors of casual riders and annual members, I gained valuable insights into the usage of different bike types. With these insights in mind, I devised actionable plans to support the marketing team in their efforts to convert more casual riders into loyal members of Cyclistic. Through the implementation of visualizations and data-driven recommendations, I aimed to enhance the company's success by leveraging the strengths of each customer group and optimizing their experience with the service.
 
 ### Background
