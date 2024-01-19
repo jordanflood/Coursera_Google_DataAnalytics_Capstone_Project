@@ -1,4 +1,4 @@
-# Coursera-Capstone-Project
+# Coursera Google Data Analytics Capstone Project 
 ## Google Data Analytics Capstone Project - Jan 2024
 
 ### Google Data Analytics Capstone Project: Cyclistic Bike-Share
