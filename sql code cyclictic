@@ -1,6 +1,8 @@
 --GOOGLE DATA ANALYTICS CAPSTONE SQL CODE
 --Created in Google BigQuery and merged both tables into one
---SQL Data Cleaning code at bottom
+
+-- Merge Tables
+
 
 SELECT
   *
