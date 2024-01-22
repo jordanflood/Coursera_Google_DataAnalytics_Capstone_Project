@@ -44,3 +44,30 @@ GROUP BY
 ORDER BY
 	Num_of_trips DESC;
 
+--Determine the top 10 most popular starting station for all customers
+
+SELECT
+start_station_name AS Starting_Station,
+start_lat,
+start_lng,
+end_lat,
+end_lng,
+COUNT(ride_id) AS Num_of_Customers
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE
+	start_station_name IS NOT NULL
+	
+GROUP BY
+	start_station_name, 
+start_lat,
+start_lng,
+end_lat,
+end_lng
+	
+ORDER BY
+	Num_of_Customers DESC
+	
+LIMIT 10;
+
