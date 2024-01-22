@@ -71,3 +71,126 @@ ORDER BY
 	
 LIMIT 10;
 
+-- Determine the popular locations for each type of rider
+
+SELECT
+member_casual AS type_of_member,
+start_station_name AS starting_location,
+start_lat,
+start_lng,
+COUNT(*) AS num_of_rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE
+	start_station_name IS NOT NULL
+	
+GROUP BY
+	member_casual, start_station_name,
+  start_lat,
+  start_lng
+	
+ORDER BY
+	member_casual, num_of_rides DESC;
+
+
+SELECT
+member_casual AS type_of_member,
+end_station_name AS ending_location,
+end_lat,
+end_lng,
+COUNT(*) AS num_of_rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE
+	end_station_name IS NOT NULL
+	
+GROUP BY
+	member_casual, end_station_name,
+  end_lat,
+  end_lng
+	
+ORDER BY
+	member_casual, num_of_rides DESC;
+
+-- Determine the popular locations for each type of rider
+
+SELECT
+member_casual AS type_of_member,
+start_station_name AS starting_location,
+start_lat,
+start_lng,
+COUNT(*) AS num_of_rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE
+	start_station_name IS NOT NULL
+	
+GROUP BY
+	member_casual, start_station_name,
+  start_lat,
+  start_lng
+	
+ORDER BY
+	member_casual, num_of_rides DESC;
+
+
+SELECT
+member_casual AS type_of_member,
+end_station_name AS ending_location,
+end_lat,
+end_lng,
+COUNT(*) AS num_of_rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE
+	end_station_name IS NOT NULL
+	
+GROUP BY
+	member_casual, end_station_name,
+  end_lat,
+  end_lng
+	
+ORDER BY
+	member_casual, num_of_rides DESC;
+
+-- Determine most popular day to ride by month
+
+SELECT
+    CASE
+        WHEN EXTRACT(MONTH FROM started_at) = 1 THEN 'January'
+        WHEN EXTRACT(MONTH FROM started_at) = 2 THEN 'February'
+        WHEN EXTRACT(MONTH FROM started_at) = 3 THEN 'March'
+        WHEN EXTRACT(MONTH FROM started_at) = 4 THEN 'April'
+        WHEN EXTRACT(MONTH FROM started_at) = 5 THEN 'May'
+        WHEN EXTRACT(MONTH FROM started_at) = 6 THEN 'June'
+        WHEN EXTRACT(MONTH FROM started_at) = 7 THEN 'July'
+        WHEN EXTRACT(MONTH FROM started_at) = 8 THEN 'August'
+        WHEN EXTRACT(MONTH FROM started_at) = 9 THEN 'September'
+        WHEN EXTRACT(MONTH FROM started_at) = 10 THEN 'October'
+        WHEN EXTRACT(MONTH FROM started_at) = 11 THEN 'November'
+        WHEN EXTRACT(MONTH FROM started_at) = 12 THEN 'December'
+    END AS month_name,
+    COUNT(*) AS num_rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+GROUP BY month_name
+
+ORDER BY month_name;
+
+--Find the average bike riding time by membership type
+
+SELECT
+  member_casual AS Member_Type,
+  ROUND(AVG(EXTRACT(MINUTE FROM ride_length)), 2) AS Average_Length_of_Ride
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE start_station_name IS NOT NULL
+
+GROUP BY member_casual;
+
