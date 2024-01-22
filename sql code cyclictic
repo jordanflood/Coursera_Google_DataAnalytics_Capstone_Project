@@ -194,3 +194,185 @@ WHERE start_station_name IS NOT NULL
 
 GROUP BY member_casual;
 
+--Top 20 highest ride times for each member group
+
+SELECT
+member_casual AS member_type,
+ride_length AS ridetime,
+start_station_name
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE
+member_casual = "member"
+
+ORDER BY
+ridetime DESC
+
+LIMIT 20;
+
+
+SELECT
+member_casual AS member_type,
+ride_length AS ridetime,
+start_station_name
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE
+member_casual = "casual"
+
+ORDER BY
+ridetime DESC
+
+LIMIT 20;
+
+
+-- Most popular day to ride a bike by member type
+
+SELECT
+    CASE
+        WHEN day_of_week = 1 THEN 'Sunday'
+        WHEN day_of_week = 2 THEN 'Monday'
+        WHEN day_of_week = 3 THEN 'Tuesday'
+        WHEN day_of_week = 4 THEN 'Wednesday'
+        WHEN day_of_week = 5 THEN 'Thursday'
+        WHEN day_of_week = 6 THEN 'Friday'
+        ELSE 'Saturday'
+    END AS Day_of_Week,
+    member_casual AS Member_Type,
+    COUNT(*) AS Num_of_Trips
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+GROUP BY Day_of_Week, Member_Type
+
+ORDER BY Day_of_Week, Num_of_Trips DESC;
+
+-- Most popular bike type by member type 
+
+SELECT
+    rideable_type AS Bike_Type,
+    member_casual AS Member_Type,
+    COUNT(*) AS Num_of_Trips
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+GROUP BY Bike_Type, Member_Type
+
+ORDER BY Bike_Type, Num_of_Trips DESC;
+
+-- Determine the most popular stations by bike type
+
+SELECT
+    member_casual AS type_of_member,
+    rideable_type AS bike_type,
+    start_station_name AS starting_location,
+    AVG(start_lat) AS average_start_lat,
+    AVG(start_lng) AS average_start_lng,
+    COUNT(*) AS num_of_rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE start_station_name IS NOT NULL
+
+GROUP BY member_casual, bike_type, starting_location
+
+ORDER BY member_casual, bike_type, num_of_rides DESC;
+
+
+SELECT
+    member_casual AS type_of_member,
+    rideable_type AS bike_type,
+    end_station_name AS ending_location,
+    AVG(end_lat) AS average_end_lat,
+    AVG(end_lng) AS average_end_lng,
+    COUNT(*) AS num_of_rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE end_station_name IS NOT NULL
+
+GROUP BY member_casual, bike_type, ending_location
+
+ORDER BY member_casual, bike_type, num_of_rides DESC;
+	
+-- Determine most popular destinations on Tuesday through Thursday for casual electric riders
+
+SELECT
+    start_station_name AS start_location,
+    COUNT(*) AS num_of_rides
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+WHERE
+    (day_of_week > 2 AND day_of_week < 6)
+    AND rideable_type = "electric_bike"
+    AND member_casual = "casual"
+    AND start_station_name IS NOT NULL
+GROUP BY
+    start_location
+ORDER BY
+    num_of_rides DESC;
+
+SELECT
+    end_station_name AS end_location,
+    COUNT(*) AS num_of_rides
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+WHERE
+    (day_of_week > 2 AND day_of_week < 6)
+    AND rideable_type = "electric_bike"
+    AND member_casual = "casual"
+    AND end_station_name IS NOT NULL
+GROUP BY
+    end_location
+ORDER BY
+    num_of_rides DESC;
+
+-- Average ride time of casual riders using electric bikes during the week and Tues-Thurs
+
+SELECT
+    CASE
+        WHEN day_of_week = 1 THEN 'Sunday'
+        WHEN day_of_week = 2 THEN 'Monday'
+        WHEN day_of_week = 3 THEN 'Tuesday'
+        WHEN day_of_week = 4 THEN 'Wednesday'
+        WHEN day_of_week = 5 THEN 'Thursday'
+        WHEN day_of_week = 6 THEN 'Friday'
+        ELSE 'Saturday'
+    END AS dayname,
+    ROUND(AVG(EXTRACT(MINUTE FROM ride_length)), 2) AS average_ride_time
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+WHERE
+    day_of_week > 2 AND day_of_week < 6
+GROUP BY
+    dayname, day_of_week
+ORDER BY
+    day_of_week;
+
+-- Find popular start time for rides during the week by member type
+
+SELECT
+    member_casual AS member_type,
+    SUBSTR(FORMAT_TIMESTAMP('%R', started_at), 1, 2) AS hour_of_day,
+    COUNT(*) AS num_of_rides,
+    rideable_type
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+GROUP BY
+    member_type, hour_of_day, rideable_type
+ORDER BY
+    member_type, hour_of_day;
+
+--Find popular start time for rides during the week for electric casual riders
+
+SELECT
+SUBSTR(FORMAT_TIMESTAMP('%R', started_at), 1, 2) AS hour_of_day,
+COUNT(*) AS num_of_rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+
+WHERE
+rideable_type = "electric_bike" AND member_casual = "casual"
+
+GROUP BY
+hour_of_day
+
+ORDER BY
+hour_of_day;
+
