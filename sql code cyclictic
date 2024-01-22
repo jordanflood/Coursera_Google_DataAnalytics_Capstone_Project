@@ -1,1 +1,46 @@
+--GOOGLE DATA ANALYTICS CAPSTONE SQL CODE
+--Created in Google BigQuery and merged both tables into one
+--SQL Data Cleaning code at bottom
+
+SELECT
+  *
+FROM `cyclistic-project-jordan.Cyclistic_Full.CyclisticFullData`
+
+UNION ALL
+
+SELECT
+  *
+FROM `cyclistic-project-jordan.Cyclistic_Full.CyclisticFullData2`;
+
+--
+
+SELECT
+member_casual AS Type_of_Rider,
+COUNT(ride_id) AS Total_Num_Of_Rides
+
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+	
+GROUP BY
+	member_casual;
+
+  --Most popular day to ride a bike
+
+SELECT
+CASE
+	WHEN day_of_week = 1 THEN 'Sunday'
+	WHEN day_of_week = 2 THEN 'Monday'
+	WHEN day_of_week = 3 THEN 'Tuesday'
+	WHEN day_of_week = 4 THEN 'Wednesday'
+	WHEN day_of_week = 5 THEN 'Thursday'
+	WHEN day_of_week = 6 THEN 'Friday'
+	ELSE 'Saturday'
+END AS dayname,
+COUNT(ride_id) AS Num_of_Trips
+FROM `cyclistic-project-jordan.Cyclistic_Full.Cyclistic_Full_Merged`
+	
+GROUP BY
+	dayname
+	
+ORDER BY
+	Num_of_trips DESC;
 
